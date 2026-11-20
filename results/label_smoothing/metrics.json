@@ -1,0 +1,41 @@
+{
+  "name": "Label smoothing (0.9)",
+  "n_generated": 10000,
+  "classifier_test_accuracy": 0.9859,
+  "frechet_distance": 125.64432452716028,
+  "gen_class_dist": [
+    0.0902,
+    0.0943,
+    0.0947,
+    0.1819,
+    0.0788,
+    0.0642,
+    0.0801,
+    0.138,
+    0.077,
+    0.1008
+  ],
+  "real_class_dist": [
+    0.098,
+    0.1135,
+    0.1032,
+    0.101,
+    0.0982,
+    0.0892,
+    0.0958,
+    0.1028,
+    0.0974,
+    0.1009
+  ],
+  "total_variation_distance": 0.11610000000000001,
+  "gen_class_entropy_bits": 3.2512942900646697,
+  "real_class_entropy_bits": 3.319422526120826,
+  "gen_mean_confidence": 0.8982111215591431,
+  "real_mean_confidence": 0.9882997870445251,
+  "gen_low_confidence_frac": 0.2934,
+  "real_low_confidence_frac": 0.0331,
+  "gen_nn_self_dist": 5.318664073944092,
+  "real_nn_self_dist": 5.450109481811523,
+  "gen_nn_to_train_dist": 5.356959819793701,
+  "real_nn_to_train_dist": 4.544672966003418
+}
