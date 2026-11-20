@@ -5,16 +5,21 @@ import torch.nn as nn
 class Generator(nn.Module):
     """Maps a latent vector to a 1x28x28 image in [-1, 1] (fully connected)."""
 
-    def __init__(self, latent_dim=100):
+    def __init__(self, latent_dim=100, batchnorm=True):
         super().__init__()
         self.latent_dim = latent_dim
+
+        def block(n_in, n_out):
+            layers = [nn.Linear(n_in, n_out)]
+            if batchnorm:
+                layers.append(nn.BatchNorm1d(n_out))
+            layers.append(nn.ReLU(inplace=True))
+            return layers
+
         self.net = nn.Sequential(
-            nn.Linear(latent_dim, 256),
-            nn.ReLU(inplace=True),
-            nn.Linear(256, 512),
-            nn.ReLU(inplace=True),
-            nn.Linear(512, 1024),
-            nn.ReLU(inplace=True),
+            *block(latent_dim, 256),
+            *block(256, 512),
+            *block(512, 1024),
             nn.Linear(1024, 28 * 28),
             nn.Tanh(),
         )
@@ -26,14 +31,16 @@ class Generator(nn.Module):
 class Discriminator(nn.Module):
     """Maps a 1x28x28 image to the probability that it is real (fully connected)."""
 
-    def __init__(self):
+    def __init__(self, dropout=0.3):
         super().__init__()
         self.net = nn.Sequential(
             nn.Flatten(),
             nn.Linear(28 * 28, 512),
             nn.LeakyReLU(0.2, inplace=True),
+            nn.Dropout(dropout),
             nn.Linear(512, 256),
             nn.LeakyReLU(0.2, inplace=True),
+            nn.Dropout(dropout),
             nn.Linear(256, 1),
             nn.Sigmoid(),
         )
